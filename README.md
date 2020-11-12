@@ -11,3 +11,7 @@ This is a WiP Project for a simple Bookkeeping Software for a Household with spl
 ## Installation and deployment
 
 TDB
+
+## Security Notice
+
+This application is not yet deployed. For development the secret key is in the repo and will be change and extracted later.
