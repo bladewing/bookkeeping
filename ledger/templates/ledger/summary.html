@@ -1,6 +1,7 @@
 {% extends 'registration/base.html' %}
 {% load mathfilters %}
 {% load static %}
+{% load l10n %}
 
 {% block title %}Summary{% endblock title %}
 
@@ -37,11 +38,48 @@
                 <td class="text-right"><b>{{ context.total_price|div:100|floatformat:2 }} €</b></td>
             </tr>
             </tbody>
-
         </table>
+
+        <h2>Pro Monat</h2>
+        <table id="table2" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Monat</th>
+                {% for user in context.users %}
+                    <th>
+                        {% if user.first_name and user.last_name %}
+                            {{ user.first_name }} {{ user.last_name }}
+                        {% else %}
+                            {{ user }}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for month,payments in context.paid_by_months.items %}
+                <tr>
+                    <td>
+                        {{ month|date:"Y F"|localize }}
+                    </td>
+                    {% for user,payment in payments.items %}
+                        <td>
+                            {% if payment %}
+                                {{ payment|div:100|floatformat:2 }} €
+                            {% else %}
+                                {{ 0|floatformat:2 }} €
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+
         <script>
             $(function () {
                 $('#table').bootstrapTable()
+                $('#table2').bootstrapTable()
             })
         </script>
     {% else %}

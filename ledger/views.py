@@ -7,6 +7,7 @@ from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.datetime_safe import datetime
 from django.views.generic import ListView, CreateView, DeleteView
 
 from ledger.forms import NewSingleEntryForm
@@ -30,6 +31,7 @@ class SummaryView(LoginRequiredMixin, ListView):
             'users': summarize_users(),
             'total_price': SingleEntry.objects.aggregate(Sum('price')).get('price__sum'),
             'summary_active': 'active',
+            'paid_by_months': paid_by_months()
         }
         return context
 
@@ -86,3 +88,37 @@ class EntryDeleteForm(DeleteView):
     model = SingleEntry
     success_url = reverse_lazy('index')
     template_name = 'ledger/entry_delete.html'
+
+
+def paid_by_months():
+    payments_by_month = {}
+    for month in month_list():
+        payments_by_month[month] = paid_by_month(month)
+    return payments_by_month
+
+
+def paid_by_month(month):
+    in_month = {}
+    for user in User.objects.all():
+        in_month[user] = paid_by_user_and_month(user, month)
+    return in_month
+
+
+def paid_by_user_and_month(user, month):
+    return SingleEntry.objects.filter(date__year=month.year, date__month=month.month, paid_by=user).aggregate(
+        Sum('price')).get('price__sum', 0)
+
+
+def total_months(dt): return dt.month + 12 * dt.year
+
+
+def month_list():
+    start = SingleEntry.objects.order_by('date').first().date
+    end = SingleEntry.objects.order_by('date').last().date
+    m_list = []
+    for tot_m in range(total_months(start) - 1, total_months(end)):
+        y, m = divmod(tot_m, 12)
+        m_list.append(datetime(y, m + 1, 1))
+        # .strftime("%b-%y"))
+    m_list.reverse()
+    return m_list
