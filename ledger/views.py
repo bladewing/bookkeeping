@@ -3,6 +3,7 @@ from operator import attrgetter
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -25,7 +26,11 @@ class SummaryView(LoginRequiredMixin, ListView):
     context_object_name = 'context'
 
     def get_queryset(self, **kwargs):
-        context = {'users': summarize_users(), 'summary_active': 'active'}
+        context = {
+            'users': summarize_users(),
+            'total_price': SingleEntry.objects.aggregate(Sum('price')).get('price__sum'),
+            'summary_active': 'active',
+        }
         return context
 
 
