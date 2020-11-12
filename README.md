@@ -1,6 +1,6 @@
 # bookkeeping
 
-THis is a WiP Project for a simple Bookkeeping Software for a Household with split accounts.
+This is a WiP Project for a simple Bookkeeping Software for a Household with split accounts.
 
 ## Features (Goal)
 
