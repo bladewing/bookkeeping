@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{ entry.name }}</td>
                     <td>{{ entry.date }}</td>
-                    <td>{{ entry.price|div:100|floatformat:2 }} €</td>
+                    <td class="text-right">{{ entry.price|div:100|floatformat:2 }} €</td>
                     <td>
                         {% if entry.paid_by.first_name and entry.paid_by.last_name %}
                             {{ entry.paid_by.first_name }} {{ entry.paid_by.last_name }}
