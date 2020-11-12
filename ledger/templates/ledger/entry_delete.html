@@ -1,0 +1,17 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_filters %}
+{% load mathfilters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block title %}Delete Entry{% endblock title %}
+
+{% block content %}
+
+    <form method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <input type="submit" value="Confirm">
+    </form>
+
+{% endblock content %}

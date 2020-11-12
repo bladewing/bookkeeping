@@ -1,0 +1,13 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_filters %}
+{% load mathfilters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block title %}Add Entry{% endblock title %}
+
+{% block content %}
+
+    {% crispy form %}
+{% endblock content %}

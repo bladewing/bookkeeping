@@ -1,0 +1,82 @@
+{% extends 'registration/base.html' %}
+{% load mathfilters %}
+{% load static %}
+
+{% block title %}Bookings{% endblock title %}
+
+{% block content %}
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="{% static 'ledger/logo.png' %}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Buchungen<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item"><p>
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    {% if entries %}
+        <table id="table" class="table table-striped table-bordered table-hover" data-show-multi-sort="true"
+               data-search="true" data-show-columns="true">
+            <thead>
+            <tr>
+                <th scope="col" data-sortable="true">Name</th>
+                <th scope="col" data-sortable="true">Datum</th>
+                <th scope="col" data-sortable="true">Preis</th>
+                <th scope="col" data-sortable="true">Bezahlt von</th>
+                <th class="text-right"><a href="{% url 'new_single_entry' %}"><i class="fas fa-plus-square"
+                                                                                 aria-hidden="true"></i></a></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.name }}</td>
+                    <td>{{ entry.date }}</td>
+                    <td>{{ entry.price|div:100|floatformat:2 }} €</td>
+                    <td>
+                        {% if entry.paid_by.first_name and entry.paid_by.last_name %}
+                            {{ entry.paid_by.first_name }} {{ entry.paid_by.last_name }}
+                        {% else %}
+                            {{ entry.paid_by }}
+                        {% endif %}
+                    </td>
+                    <td class="text-right">
+                        {% if user == entry.paid_by %}
+                            <a class="btn btn-default" href="{% url 'edit_single_entry' pk=entry.pk %}"><i
+                                    class="fas fa-edit" aria-hidden="true"></i></a>
+                            <a class="btn btn-default" href="{% url 'single_entry_delete' pk=entry.pk %}">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        <script>
+            $(function () {
+                $('#table').bootstrapTable()
+            })
+        </script>
+    {% else %}
+        <p>Noch keine Einträge vorhanden.</p>
+    {% endif %}
+
+{% endblock content %}
+
