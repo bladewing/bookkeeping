@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
 
-    {% if entries %}
+    {% if context.entries %}
         <table id="table" class="table table-striped table-bordered table-hover" data-show-multi-sort="true"
                data-search="true" data-show-columns="true">
             <thead>
@@ -23,7 +23,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for entry in entries %}
+            {% for entry in context.entries %}
                 <tr>
                     <td>{{ entry.name }}</td>
                     <td>{{ entry.date }}</td>

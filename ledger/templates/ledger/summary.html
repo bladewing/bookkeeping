@@ -18,7 +18,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for user,value in context.items %}
+            {% for user,value in context.users.items %}
                 <tr>
                     <td>
                         {% if user.first_name and user.last_name %}

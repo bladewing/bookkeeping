@@ -14,10 +14,10 @@ from ledger.models import SingleEntry
 
 class IndexView(LoginRequiredMixin, ListView):
     template_name = 'ledger/index.html'
-    context_object_name = 'entries'
+    context_object_name = 'context'
 
     def get_queryset(self):
-        return SingleEntry.objects.all()
+        return {'entries': SingleEntry.objects.all(), 'bookings_active': 'active'}
 
 
 class SummaryView(LoginRequiredMixin, ListView):
@@ -25,7 +25,7 @@ class SummaryView(LoginRequiredMixin, ListView):
     context_object_name = 'context'
 
     def get_queryset(self, **kwargs):
-        context = summarize_users()
+        context = {'users': summarize_users(), 'summary_active': 'active'}
         return context
 
 
