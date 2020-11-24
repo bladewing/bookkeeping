@@ -109,7 +109,8 @@ def paid_by_user_and_month(user, month):
         Sum('price')).get('price__sum', 0)
 
 
-def total_months(dt): return dt.month + 12 * dt.year
+def total_months(dt):
+    return dt.month + 12 * dt.year
 
 
 def month_list():

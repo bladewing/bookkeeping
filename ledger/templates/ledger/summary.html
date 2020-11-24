@@ -5,6 +5,7 @@
 
 {% block title %}Summary{% endblock title %}
 
+
 {% block content %}
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
     <h1>Zusammenfassung</h1>
@@ -63,7 +64,7 @@
                         {{ month|date:"Y F"|localize }}
                     </td>
                     {% for user,payment in payments.items %}
-                        <td>
+                        <td class="text-right">
                             {% if payment %}
                                 {{ payment|div:100|floatformat:2 }} €
                             {% else %}
