@@ -2,10 +2,10 @@ version: '3.7'
 
 services:
   web:
-    build: .
+    build: ./app
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./:/usr/src/bookkeeping/
+      - ./app:/usr/src/app/
     ports:
       - 8000:8000
     env_file:
@@ -13,11 +13,11 @@ services:
   db:
     image: postgres:12.0-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data_dev:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=django
+      - POSTGRES_DB=dev
 
 volumes:
-  postgres_data:
+  postgres_data_dev:
