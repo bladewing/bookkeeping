@@ -53,6 +53,7 @@
         </script>
     {% else %}
         <p>Noch keine Einträge vorhanden.</p>
+        <p><a href="{% url 'new_single_entry' %}"><i class="fas fa-plus-square" aria-hidden="true"></i></a></p>
     {% endif %}
 
 {% endblock content %}
