@@ -2,6 +2,10 @@
     max-height: 2em;
 }
 
+h1, h2 {
+    padding-top: 1.2rem;
+}
+
 .navbar {
     padding: .8rem;
 }
