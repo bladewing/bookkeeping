@@ -4,12 +4,27 @@
 {% block title %}Login{% endblock title %}
 
 {% block content %}
-    <form method="post">
-
+    <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <table class="table table-borderless">
-            {{ form.as_table }}
-        </table>
-        <button type="submit">Log In</button>
+        <div class="container-fluid">
+            <div class="row justify-content-center padding">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <label class="control-label" for="username">{{ form.username.label_tag }}</label>
+                    <input id="username" name="username" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="row justify-content-center padding">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <label class="control-label" for="password">{{ form.password.label_tag }}</label>
+                    <input id="password" name="password" type="password" class="form-control">
+                </div>
+            </div>
+            <div class="row justify-content-center padding">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </div>
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+        </div>
     </form>
 {% endblock content %}
