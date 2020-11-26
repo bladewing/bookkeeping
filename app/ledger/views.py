@@ -39,7 +39,7 @@ class SummaryView(LoginRequiredMixin, ListView):
 def summarize_users():
     ret = {}
     for user in User.objects.all():
-        ret[user] = reduce(lambda x, y: x + y, map(attrgetter('price'), SingleEntry.objects.filter(paid_by=user)))
+        ret[user] = reduce(lambda x, y: x + y, map(attrgetter('price'), SingleEntry.objects.filter(paid_by=user)), 0)
     return ret
 
 
@@ -114,12 +114,13 @@ def total_months(dt):
 
 
 def month_list():
-    start = SingleEntry.objects.order_by('date').first().date
-    end = SingleEntry.objects.order_by('date').last().date
     m_list = []
-    for tot_m in range(total_months(start) - 1, total_months(end)):
-        y, m = divmod(tot_m, 12)
-        m_list.append(datetime(y, m + 1, 1))
-        # .strftime("%b-%y"))
-    m_list.reverse()
+    if SingleEntry.objects.all():
+        start = SingleEntry.objects.order_by('date').first().date
+        end = SingleEntry.objects.order_by('date').last().date
+        for tot_m in range(total_months(start) - 1, total_months(end)):
+            y, m = divmod(tot_m, 12)
+            m_list.append(datetime(y, m + 1, 1))
+            # .strftime("%b-%y"))
+        m_list.reverse()
     return m_list
