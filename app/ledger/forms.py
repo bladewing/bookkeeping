@@ -1,10 +1,11 @@
 from bootstrap_datepicker_plus import DatePickerInput
 from django import forms
+from djmoney.forms import MoneyWidget
 
 from ledger.models import SingleEntry
 
 
-class NewSingleEntryForm(forms.ModelForm):
+class SingleEntryCreateAndUpdate(forms.ModelForm):
     field_order = ['name', 'price', 'paid_by', 'date', 'comment']
 
     class Meta:
@@ -12,4 +13,5 @@ class NewSingleEntryForm(forms.ModelForm):
         fields = {'name', 'price', 'comment', 'date', 'paid_by'}
         widgets = {
             'date': DatePickerInput(options={'format': 'YYYY-MM-DD', 'debug': True}),
+            'price': MoneyWidget(currency_widget={})
         }

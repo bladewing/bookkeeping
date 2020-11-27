@@ -10,7 +10,7 @@
 {% block content %}
     {{ form.media }}
     <div class="container-fluid padding">
-        <form action="{% url 'new_single_entry' %}" method="post" class="form">
+        <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% bootstrap_button "Save" button_type="submit" button_class="btn-primary btn-block" %}

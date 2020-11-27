@@ -9,9 +9,17 @@
 
 {% block content %}
 
-    <form method="post">{% csrf_token %}
-        <p>Are you sure you want to delete "{{ object }}"?</p>
-        <input type="submit" value="Confirm">
-    </form>
+    <div class="container-fluid">
+        <form method="post">{% csrf_token %}
+            <div class="row text-center padding">
+                <div class="col-12">
+                    <p>Are you sure you want to delete "{{ object }}"?</p>
+                </div>
+                <div class="col-12">
+                    <input class="btn btn-block btn-primary" type="submit" value="Confirm">
+                </div>
+            </div>
+        </form>
+    </div>
 
 {% endblock content %}

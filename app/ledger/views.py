@@ -1,3 +1,4 @@
+from decimal import Decimal
 from functools import reduce
 from operator import attrgetter
 
@@ -8,9 +9,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.datetime_safe import datetime
-from django.views.generic import ListView, CreateView, DeleteView
+from django.views.generic import ListView, DeleteView, UpdateView, CreateView
+from djmoney.money import Money
 
-from ledger.forms import NewSingleEntryForm
+from ledger.forms import SingleEntryCreateAndUpdate
 from ledger.models import SingleEntry
 
 
@@ -29,7 +31,7 @@ class SummaryView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         context = {
             'users': summarize_users(),
-            'total_price': SingleEntry.objects.aggregate(Sum('price')).get('price__sum'),
+            'total_price': Money(SingleEntry.objects.aggregate(Sum('price'))['price__sum'], 'EUR'),
             'summary_active': 'active',
             'paid_by_months': paid_by_months()
         }
@@ -39,13 +41,14 @@ class SummaryView(LoginRequiredMixin, ListView):
 def summarize_users():
     ret = {}
     for user in User.objects.all():
-        ret[user] = reduce(lambda x, y: x + y, map(attrgetter('price'), SingleEntry.objects.filter(paid_by=user)), 0)
+        ret[user] = reduce(lambda x, y: x + y, map(attrgetter('price'), SingleEntry.objects.filter(paid_by=user)),
+                           Money(0.0, 'EUR'))
     return ret
 
 
 def post_new_single_entry(request):
     if request.method == "POST":
-        form = NewSingleEntryForm(request.POST)
+        form = SingleEntryCreateAndUpdate(request.POST)
         if form.is_valid():
             entry = form.save(commit=False)
             entry.paid_by = request.user
@@ -53,14 +56,14 @@ def post_new_single_entry(request):
             entry.save()
             return redirect('index')
     else:
-        form = NewSingleEntryForm()
+        form = SingleEntryCreateAndUpdate()
     return render(request, 'ledger/entry_edit.html', {'form': form})
 
 
 def edit_single_entry(request, pk):
     entry = get_object_or_404(SingleEntry, pk=pk)
     if request.method == "POST":
-        form = NewSingleEntryForm(request.POST, instance=entry)
+        form = SingleEntryCreateAndUpdate(request.POST, instance=entry)
         if form.is_valid():
             entry = form.save(commit=False)
             entry.paid_by = request.user
@@ -68,24 +71,27 @@ def edit_single_entry(request, pk):
             entry.save()
             return redirect('index')
     else:
-        form = NewSingleEntryForm(instance=entry)
+        form = SingleEntryCreateAndUpdate(instance=entry)
     return render(request, 'ledger/entry_edit.html', {'form': form})
 
 
-class EntryUpdateForm(CreateView):
+class EntryCreateForm(CreateView):
     model = SingleEntry
-    form_class = NewSingleEntryForm
+    form_class = SingleEntryCreateAndUpdate
     template_name = 'ledger/entry_edit.html'
     success_url = reverse_lazy('index')
 
-    def form_valid(self, form):
-        # form.instance.date = timezone.now()
-        form.instance.paid_by = self.request.user
-        return super(EntryUpdateForm, self).form_valid(form)
+
+class EntryUpdateForm(UpdateView):
+    model = SingleEntry
+    form_class = SingleEntryCreateAndUpdate
+    template_name = 'ledger/entry_edit.html'
+    success_url = reverse_lazy('index')
 
 
 class EntryDeleteForm(DeleteView):
     model = SingleEntry
+    form_class = SingleEntryCreateAndUpdate
     success_url = reverse_lazy('index')
     template_name = 'ledger/entry_delete.html'
 
@@ -105,8 +111,11 @@ def paid_by_month(month):
 
 
 def paid_by_user_and_month(user, month):
-    return SingleEntry.objects.filter(date__year=month.year, date__month=month.month, paid_by=user).aggregate(
+    sum_user_month = SingleEntry.objects.filter(date__year=month.year, date__month=month.month, paid_by=user).aggregate(
         Sum('price'))['price__sum']
+    if not sum_user_month:
+        sum_user_month = 0
+    return Money(Decimal(sum_user_month), 'EUR')
 
 
 def total_months(dt):

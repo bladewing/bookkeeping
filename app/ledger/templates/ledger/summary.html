@@ -49,7 +49,7 @@
                     {% endfor %}
                     <tr class="d-flex">
                         <td class="col-8"><b>Summe</b></td>
-                        <td class="col-4 text-right"><b>{{ context.total_price }} €</b></td>
+                        <td class="col-4 text-right"><b>{{ context.total_price }}</b></td>
                     </tr>
                     </tbody>
                 </table>
@@ -88,11 +88,7 @@
                             </td>
                             {% for user,payment in payments.items %}
                                 <td class="col-4 text-right">
-                                    {% if payment %}
-                                        {{ payment }} €
-                                    {% else %}
-                                        {% money_localize '0' 'EUR' %}
-                                    {% endif %}
+                                        {{ payment }}
                                 </td>
                             {% endfor %}
                         </tr>
