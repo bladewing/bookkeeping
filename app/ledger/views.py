@@ -9,7 +9,6 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.datetime_safe import datetime
 from django.views.generic import ListView, CreateView, DeleteView
-from djmoney.money import Money
 
 from ledger.forms import NewSingleEntryForm
 from ledger.models import SingleEntry
@@ -106,8 +105,9 @@ def paid_by_month(month):
 
 
 def paid_by_user_and_month(user, month):
-    return reduce(lambda x,y: x.price + y.price, SingleEntry.objects.filter(date__year=month.year, date__month=month.month, paid_by=user), 0)
-    #.aggregate(Sum('price'))['price__sum']
+    return reduce(lambda x, y: x.price + y.price,
+                  SingleEntry.objects.filter(date__year=month.year, date__month=month.month, paid_by=user), 0)
+    # .aggregate(Sum('price'))['price__sum']
 
 
 def total_months(dt):
