@@ -2,6 +2,7 @@
 {% load mathfilters %}
 {% load static %}
 {% load l10n %}
+{% load djmoney %}
 
 {% block title %}Summary{% endblock title %}
 
@@ -43,12 +44,12 @@
                                     {{ user }}
                                 {% endif %}
                             </td>
-                            <td class="col-4 text-right">{{ value|div:100|floatformat:2 }} €</td>
+                            <td class="col-4 text-right">{{ value }}</td>
                         </tr>
                     {% endfor %}
                     <tr class="d-flex">
                         <td class="col-8"><b>Summe</b></td>
-                        <td class="col-4 text-right"><b>{{ context.total_price|div:100|floatformat:2 }} €</b></td>
+                        <td class="col-4 text-right"><b>{{ context.total_price }} €</b></td>
                     </tr>
                     </tbody>
                 </table>
@@ -88,9 +89,9 @@
                             {% for user,payment in payments.items %}
                                 <td class="col-4 text-right">
                                     {% if payment %}
-                                        {{ payment|div:100|floatformat:2 }} €
+                                        {{ payment }} €
                                     {% else %}
-                                        {{ 0|floatformat:2 }} €
+                                        {% money_localize '0' 'EUR' %}
                                     {% endif %}
                                 </td>
                             {% endfor %}

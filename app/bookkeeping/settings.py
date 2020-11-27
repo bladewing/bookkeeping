@@ -30,7 +30,10 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(" ")
 
 INSTALLED_APPS = [
     'mathfilters',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
     'crispy_forms',
+    'djmoney',
     'ledger.apps.LedgerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -123,3 +126,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}

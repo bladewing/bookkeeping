@@ -3,12 +3,17 @@
 {% load mathfilters %}
 {% load crispy_forms_tags %}
 {% load static %}
-
+{% load bootstrap4 %}
 
 {% block title %}Add Entry{% endblock title %}
 
 {% block content %}
-    <div class="container-fluid">
-        {{ form }}
+    {{ form.media }}
+    <div class="container-fluid padding">
+        <form action="{% url 'new_single_entry' %}" method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% bootstrap_button "Save" button_type="submit" button_class="btn-primary btn-block" %}
+        </form>
     </div>
 {% endblock content %}
