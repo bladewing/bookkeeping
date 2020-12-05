@@ -1,5 +1,5 @@
 pip~=20.3.1
-djiango~=3.1.4
+django~=3.1.4
 django-crispy-forms~=1.10.0
 django-bootstrap4~=2.3.1
 django-bootstrap-datepicker-plus~=3.0.5
