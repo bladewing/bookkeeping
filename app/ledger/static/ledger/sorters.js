@@ -5,11 +5,11 @@ function dateSorter(a, b) {
 }
 
 function floatSorter(a, b) {
-    if (parseFloat(a) < parseFloat(b)) return 1;
-    if (parseFloat(a) > parseFloat(b)) return -1;
+    if (parseFloat(a.price) < parseFloat(b.price)) return 1;
+    if (parseFloat(a.price) > parseFloat(b.price)) return -1;
     return 0;
 }
 
 function stringCaseInsensitiveSorter(a, b) {
-    return a.toLowerCase().localeCompare(b.toLowerCase())
+    return (a.name.toString().toLowerCase()).localeCompare(b.name.toString().toLowerCase())
 }
