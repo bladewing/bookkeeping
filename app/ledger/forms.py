@@ -15,3 +15,4 @@ class SingleEntryCreateAndUpdate(forms.ModelForm):
             'date': DatePickerInput(options={'format': 'YYYY-MM-DD', 'debug': True}),
             'price': MoneyWidget(currency_widget={})
         }
+        localized_fields = '__all__'
