@@ -21,7 +21,7 @@ class IndexView(LoginRequiredMixin, ListView):
     context_object_name = 'context'
 
     def get_queryset(self):
-        return {'entries': SingleEntry.objects.all(), 'bookings_active': 'active'}
+        return {'entries': SingleEntry.objects.order_by('date'), 'bookings_active': 'active'}
 
 
 class SummaryView(LoginRequiredMixin, ListView):
