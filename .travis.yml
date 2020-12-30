@@ -1,7 +1,14 @@
 language: python
+services:
+  - docker
 before_install:
   - cd app
 jobs:
   include:
     - stage: test
       script: python manage.py test
+    - stage: build
+      script: docker build -t bladewing/bahnplan-next .
+stages:
+  - test
+  - build
