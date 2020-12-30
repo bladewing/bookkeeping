@@ -1,19 +1,19 @@
 language: python
 services:
-- docker
+  - docker
 before_install:
-- cd app
+  - cd app
 jobs:
   include:
-  - stage: test
-    script: python manage.py test
-  - stage: build
-    script:
-    - docker build -t bladewing/bahnplan-next .
-    - bash ../docker_push
+    - stage: test
+      script: python manage.py test
+    - stage: build
+      script:
+        - docker build -t bladewing/bookkeeping .
+        - bash ../docker_push
 stages:
-- test
-- build
+  - test
+  - build
 env:
   global:
     secure: rTg8Oy6I/Ng0g4c0M0Hfz5ouZuwk/S1WHBH8owm1XxodZo5uOZ5umrm2EDvsjzvjZ2qZTJB1UXd1blDvxkbJyFpVkyuY2LBh/p3VcZNRenVbDQPtb92TsJJgA/jDXFgnUG21Q/4fwM2vOJkQEWkpcQzfJG520ApODqBGUXpnNv1xPijY+W/nnQ3klLNVo3aw4x329oR2Y7i9IICQY0Nqveea8cfJq9De5iJliUBwDz1m3ctZ7tLql5uFJOIFC+4IKDFCtKHAM2shmgU4YhF/uScUcGHpvn5vJIW0fP9V4xx9HHA6+EnUcIBLpzmG1TEzSpR5p1mDw9Wz7scis12Fwbqeqmz446nUnlvXxdS6jhRdUYCT8qbgEJ3f2m3HFHnxrKySmVeSMglL9YMQ59PhaMzyq6hnTQwYGj2pH55/UzejmKj6W2JFXnEQeMv4rTlApFO3rJI7lD4esygsOmH6VM7Kfvb4PfHLCbLNHhCR6fyor3R0i1293dtw2TByR8vVbqBYHTxSzmHtJLIiIoldYCxYuFidXAK6lvsS5b+b7vMvd156L58wU2C/hG1vFr1641dkG3YdNGQyf5lW0VGkUNcZceOEp5bzeVjxazsr+dib46+a5gFmLjlhjuAb2MvEobA+3Fo+XmfcAFiIzTJ2M7Vu9mPkf7MB/ZnRrfxEisM=
