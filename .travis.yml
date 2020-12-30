@@ -1,5 +1,7 @@
 language: python
 before_install:
   - cd app
-script:
-  - python manage.py test
+jobs:
+  include:
+    - stage: test
+      script: python manage.py test
