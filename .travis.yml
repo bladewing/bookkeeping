@@ -1,20 +1,19 @@
 language: python
 services:
-  - docker
+- docker
 before_install:
-  - cd app
+- cd app
 jobs:
   include:
-    - stage: test
-      script: python manage.py test
-    - stage: build
-      script:
-        - docker build -t bladewing/bahnplan-next .
-        - bash ../docker_push
+  - stage: test
+    script: python manage.py test
+  - stage: build
+    script:
+    - docker build -t bladewing/bahnplan-next .
+    - bash ../docker_push
 stages:
-  - test
-  - build
+- test
+- build
 env:
   global:
-    - secure: kNdc/efxCq/BEAUyvR1kjQIFcTrNcRrubbnerwHb0v8UtzBplBhlMS0eEN/09G54zFLHh04khc8KIPdRUd5arTBmPViLc2DNHVKeZbgfG49v7ZSpBO8Om6q6SdrhWB9souNDhxygwby5aFCZhYbU73t1EeZ9kyEsR6ZzHwCJbZN1vNjLg9+Y5ChKFCvy929pOhLNI6m2gCUYKDsJZFVn8kIexN6nm8unSZ3+JNOu9P8uM8YapAeQl0sWUf2AX2LifsApqXq7lvBcmWSS/ras7LwQ7QxUtzLvie7GTvQUIw29arI7qXj7HlftWMfDqwOCmEqSjPDNjhrKHGH9wtKEh9ZctuJ7eopPzg0YZXnsTUUV6z3kaeFB6gkjvEw4nIqaadPWWNSQEelOVcgJNgFCxFdFCjBtRqfwlwBA184VrgTe+yFLeY/OaawRqcIHSUsUf8rdxlinBtm9NbmXFdDYZ3Cx9YV1qNzclAEpudlrV/mFRFZQRDk7s+LMDxRDymFmYzKH67ZveIHUb8DdWSM9sJDDUcSeWaSlA7DFrwk22ljUoyJdU8V89Z1EMv+Y+sZamlBhdkLpmmIHCKSjTg9FzUkYYl+yUIaw1cPZmbRCZ9Xpu84KyDOZcBD2tJfJJZZOaYrzSEN67uKEkHuOz3itM6IMGQWdXutUSH8DXQXRnBQ=
-    - secure: dN2buZQzK1HocgnVipINnUktBN3KGdBNvksaubB5aHaMaJeAsw1xH0Kr/BQ/OoEtv41lNyNoliOsj5yrz2+C2eh4Jh4mBjyI+5OLATHz7HBSVxvtzAV4USK49N5tLvSJJFoJdjWHqkdt/hlbbYAAt5t2i1uwfHdVqxirHNjGms67ytcWtpGjrGwPSKvacezR1VyKsrfKTD2oFdknBjFvCgPEpZpJOCjS/1t/HELtvnU034PlxiLFfTH3nS4RSKY/Hu/Pq2LWCXFRhA44a2k6KM7mNVwc+1SQ1G7R0U/8bkHwvvAD+PrGX4mZ6kyMxz9je5nlY01KdRboz5Xp+fqifje0agLlUx+LEFBDyrVfCkRA3dWFr4/vmYCCNLiYqO1anWsIxwoynGzUqGwH5Ll6TIGjOs4x1gzakTO1bsE0J+QAlEv8v936FnOzXrnI86ZO6kEZRWSEBCQAQUrRlQ4D2Jr067ekwmNWG1jiovLsr5QyCygAWF/NRX66NaFzEsuZgJuVANijGS3Vq6hUuJ27FAeauHhUnOHn6SqSK8bcdDgCQMYGGGaJCmSPJSMunCP/I1ZQ7q6oLI/riLPlqXdwo8FQbHdC824GVtXjCdYT0f2NDFOmQRgcg5oUTZlp1QMujb+JMrasK838mqQ1s8druGr17UK+u4A6O5n6PzL89vI=
+    secure: eQC0D6mEeAOqZgm+bk5mSFQsil1bzl1nDq+H7XbDyptcAgDn7l93r0Szmchymb/ZY8YWoQBpJTi0M9L/DOLnXEvPsuxvgnapFCKFa7gfFbV0lbcQXQVaMaINW6Hij4iRBM9NFrSUPBGx+iuUwtKZVk5KOkVBD/spwlcthrb7J1dThHOGA84zq4BtSW+LMdeGz0XEezhZ0jOf/DmmgM/e3nQRqs4WPfs4f8JIQe8IL5SFG4eBfOTRqk4OB9bBxFkTU0rK7IONGpnQM5QcpRXwCffRpzKoVDR6huj1TisfQOhtFMcbaaU8WoDzq0+myOoWPVgb+I7D96FFwM71YuIRuCjePSIm4wUifTnslV8FsgqePEcMhjdrbRatRIgn7KuBttaoHRK7uOF9xZB4DhugSqXe6XB09k+HbHNM1Jcsi+GRZt96lKHrusBiH2Pf7WF50bu7tgTXgMJlYg3312fFvhUyvEi1/wPLJS//98gjMd876xGeXCxd3UjsdDoK6ME8Rxsh65GD06V9oENyVv0tK9YUmPM3nvZ2YGstMgjP+2cJ/a4Acdt6XXrfCVIhW/TtKXafeMl6FA9pvtyQwUKiq5a9R8qCJH6mQhu3TqmPzuDntYRYQEoaNJgdIx1WAk8v+luZVPAiiK5EXsluQfvTIW/ngwPquWBVvg4DI0HXIjQ=
