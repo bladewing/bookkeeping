@@ -1,0 +1,2 @@
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin https://registry.ifflaender-family.de
+docker push bladewing/bahnplan-next
