@@ -1,2 +1,2 @@
 docker login -u bladewing -p "$DOCKER_PASSWORD" registry.ifflaender-family.de
-docker push bladewing/bookkeeping
+docker push registry.ifflaender-family.de/bladewing/bookkeeping

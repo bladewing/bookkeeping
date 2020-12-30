@@ -9,7 +9,7 @@ jobs:
       script: python manage.py test
     - stage: build
       script:
-        - docker build -t bladewing/bookkeeping .
+        - docker build -t registry.ifflaender-family.de/bladewing/bookkeeping .
         - bash ../docker_push
 stages:
   - test
