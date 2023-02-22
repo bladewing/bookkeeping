@@ -4,6 +4,7 @@ from djmoney.models.fields import MoneyField
 
 
 class Entry(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     price = MoneyField(decimal_places=2, default=0, default_currency='EUR', max_digits=11)
     comment = models.TextField(blank=True)
@@ -17,6 +18,7 @@ class Entry(models.Model):
 
 
 class RecurringEntry(Entry):
+    id = models.AutoField(primary_key=True)
     start = models.DateField()
     end = models.DateField(null=True)
     recurrence = models.DurationField()
